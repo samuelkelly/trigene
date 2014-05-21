@@ -10,19 +10,19 @@ public class CompareImages {
 		// the fitness value
 		double fitness = 0;
 
-		// run through all the pixels
+		// for all the pixels
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
 				// for image a
-				int imageARGB = imageA.getRGB(i, j);
-				Color colorA = new Color(imageARGB);
+				int imageARgb = imageA.getRGB(i, j);
+				Color colorA = new Color(imageARgb);
 				double aRed = colorA.getRed();
 				double aGreen = colorA.getGreen();
 				double aBlue = colorA.getBlue();
 
 				// for image b
-				int imageBRGB = imageB.getRGB(i, j);
-				Color colorB = new Color(imageBRGB);
+				int imageBRgb = imageB.getRGB(i, j);
+				Color colorB = new Color(imageBRgb);
 				double bRed = colorB.getRed();
 				double bGreen = colorB.getGreen();
 				double bBlue = colorB.getBlue();
