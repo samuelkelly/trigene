@@ -14,26 +14,28 @@ import javax.swing.JPanel;
 public class GeneticGui extends JPanel {
 
 	BufferedImage imageToBecome;
+	BufferedImage triImage;
 	
 	public GeneticGui()
 	{
+		triImage = new BufferedImage(256, 256, BufferedImage.TYPE_INT_ARGB);
+		Graphics g1 = triImage.getGraphics();
+		g1.setColor(Color.black);
+		g1.fillRect(0, 0, 256, 256);
 		try {
 			File file = new File("testImage.png");
 			imageToBecome  = ImageIO.read(file);
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.exit(0);
-		}
-		
-		
+		}		
 	}
 	
 	public void paintComponent(Graphics g)
 	{
 		g.drawImage(imageToBecome, 10, 10, 480, 480, null);
 		
-		g.setColor(Color.black);
-		g.fillRect(510, 10, 480, 480);		
+		g.drawImage(triImage, 510, 10, 480, 480, null);
 	}
 	
 	public Dimension getMaximumSize() {
