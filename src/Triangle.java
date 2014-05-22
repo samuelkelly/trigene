@@ -41,11 +41,16 @@ public class Triangle {
 			 (short) (Math.random() * 256));
 	}
 	
+	public Triangle(Triangle that) {
+		this(that.x1, that.y1, that.x2, that.y2, that.x3, that.y3, that.alpha,
+				that.r, that.g, that.b);
+	}
+	
 	/** Mutate a random field of the triangle. */
 	public void mutate() {
 		// select a field at random and add a random
 		// number between -50 and +50 to it
-		int fieldNumber = (int) Math.random() * 10;
+		int fieldNumber = (int) (Math.random() * 10);
 		short c = (short) (Math.random() * 100 - 50); // random increment
 		switch (fieldNumber) {
 		case 0: x1 = (short) min(max(0, x1 + c), 255); break;
