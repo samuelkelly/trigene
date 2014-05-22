@@ -32,7 +32,7 @@ public class CompareImages {
 						+ Math.pow(aBlue - bBlue, 2));
 			}
 		}
-		return fitness;
+		return -fitness;
 	}
 
 }
