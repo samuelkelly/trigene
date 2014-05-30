@@ -17,20 +17,17 @@ public class GeneticGui extends JPanel {
 
 	BufferedImage imageToBecome;
 	BufferedImage bestImage;
-	CompareImages comparer;
+//	CompareImages comparer;
 	Individual population[];
+	
+	public static final int POPULATION_SIZE = 50;
+	public static final int BEST_GROUP_SIZE = 5; // make sure this divides POPULATION_SIZE evenly
+	public static final int BEST_SPAWN_SIZE = POPULATION_SIZE/BEST_GROUP_SIZE - 1;
+	
+	public static final int NUMBER_OF_GENERATIONS = 1000000;
 	
 	public GeneticGui()
 	{
-		bestImage = new BufferedImage(256, 256, BufferedImage.TYPE_INT_ARGB);
-		
-		population = new Individual[50];
-		for(int i = 0; i < population.length; i++)
-		{
-			population[i] = new Individual();
-		}
-		comparer = new CompareImages();
-		
 		try {
 			File file = new File("testImage.png");
 			imageToBecome  = ImageIO.read(file);
@@ -39,12 +36,20 @@ public class GeneticGui extends JPanel {
 			System.exit(0);
 		}
 		
+		bestImage = new BufferedImage(256, 256, BufferedImage.TYPE_INT_ARGB);
+		
+		population = new Individual[POPULATION_SIZE];
+		for (int i = 0; i < population.length; i++)
+		{
+			population[i] = new Individual(imageToBecome);
+		}
+//		comparer = new CompareImages();
 		
 	}
 	
 	private void evolve() {
 		// TODO Auto-generated method stub
-		for(int i = 0; i < 10; i++)
+		for(int i = 0; i < NUMBER_OF_GENERATIONS; i++)
 		{
 			nextGeneration();
 			System.out.println("" + i);
@@ -53,11 +58,11 @@ public class GeneticGui extends JPanel {
 	}
 
 	private void nextGeneration() {
-		Individual bestFive[] = new Individual[5];
+		Individual bestFive[] = new Individual[BEST_GROUP_SIZE];
 		TreeSet<Individual> sortedPop = new TreeSet<Individual>(new Comparator<Individual>(){
 			@Override
 			public int compare(Individual arg0, Individual arg1) {
-				return (int) (comparer.compareImages(imageToBecome, arg0.getBufferedImage()) - comparer.compareImages(imageToBecome, arg1.getBufferedImage()));
+				return (int) (arg0.fitness() - arg1.fitness());
 			}
 		});
 		
@@ -77,7 +82,7 @@ public class GeneticGui extends JPanel {
 		for(int i = 0; i < bestFive.length; i++)
 		{
 			population[n++] = bestFive[i];
-			for(int j = 0; j < 4; j++)
+			for(int j = 0; j < BEST_SPAWN_SIZE; j++)
 			{
 				population[n++] = bestFive[i].spawn();
 			}
